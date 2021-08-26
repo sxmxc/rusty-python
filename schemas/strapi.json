@@ -1,0 +1,48 @@
+[{
+    "database": "strapi",
+    "index": "contacts",
+    "nodes": {
+      "table": "contacts",
+      "schema": "public",
+      "columns": [
+        "id",
+        "email",
+        "first_name",
+        "last_name",
+        "created_at",
+        "updated_at"
+      ]
+    }
+  },
+  {
+    "database": "strapi",
+    "index": "organizations",
+    "nodes": {
+      "table": "organizations",
+      "columns": [
+        "id",
+        "name",
+        "organization_type",
+        "created_at",
+        "updated_at"
+      ],
+      "children": [{
+          "table": "organization_types",
+          "columns": [
+            "id",
+            "name"
+          ],
+          "relationship": {
+            "variant": "object",
+            "type": "one_to_one",
+            "foreign_key": {
+              "child": ["id"],
+              "parent": ["organization_type"]
+            }
+          }
+        }
+      ]
+    }
+
+  }
+]
