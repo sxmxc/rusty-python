@@ -9,6 +9,7 @@ services:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
       - POSTGRES_DB
+    restart: always
     volumes:
       - "/data/postgres:/var/lib/postgresql/data"
   pgadmin:
@@ -22,16 +23,17 @@ services:
       - POSTGRES_PASSWORD
       - PGADMIN_DEFAULT_EMAIL
       - PGADMIN_DEFAULT_PASSWORD
+    profiles: ["dev"]
   redis:
     hostname: redis
     image: redis
     command: redis-server --requirepass PLEASE_CHANGE_ME
+    restart: always
     ports:
       - "6379:6379"
   redis-commander:
     hostname: redis-commander
     image: rediscommander/redis-commander:latest
-    restart: always
     ports:
       - "8081:8081"
     depends_on:
@@ -43,6 +45,7 @@ services:
       - REDIS_PORT
       - REDIS_AUTH
       - REDIS_PASSWORD
+    profiles: ["dev"]
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.14.0
     ports:
@@ -52,6 +55,7 @@ services:
       - xpack.security.enabled
       - network.host
       - http.host
+    restart: always
     volumes:
       - "/data/elasticsearch:/usr/share/elasticsearch/data"
   elastichq:
@@ -64,6 +68,7 @@ services:
       - ELASTICSEARCH_PORT
       - ELASTICSEARCH_SCHEME
       - ELASTICSEARCH_HOST
+    profiles: ["dev"]
   pgsync:
     build:
       context: .
